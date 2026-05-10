@@ -1,6 +1,6 @@
 'use client';
-
 import React, { useState } from 'react';
+import Image from 'next/image'; // Added optimized Image component
 import Item from './Item';
 
 export default function Product() {
@@ -38,9 +38,7 @@ export default function Product() {
   return (
     <div className="w-full min-h-screen flex bg-gray-100 relative">
       {/* Product Grid */}
-      <div
-        className="flex-1 bg-white p-4 md:p-6 overflow-auto transition-all duration-300"
-      >
+      <div className="flex-1 bg-white p-4 md:p-6 overflow-auto transition-all duration-300">
         <div
           className={`grid gap-4 md:gap-6 mb-8 ${
             showYellowPanel ? 'grid-cols-3' : 'grid-cols-3 md:grid-cols-5'
@@ -53,9 +51,16 @@ export default function Product() {
               className="w-full aspect-[3/4] bg-gray-100 rounded-xl shadow-sm mb-[50px] overflow-hidden hover:shadow-md hover:bg-gray-50 active:scale-[0.98] transition flex flex-col"
             >
               {/* Top 70%: Image */}
-              <div className="w-full h-[70%] bg-gray-200">
+              <div className="w-full h-[70%] bg-gray-200 relative">
                 {box?.image ? (
-                  <img src={box.image} alt="Product" className="w-full h-full object-cover" />
+                  /* Added unoptimized because these are likely local blob URLs or external links */
+                  <Image
+                    src={box.image}
+                    alt={box.name || "Product"}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">
                     No Image
